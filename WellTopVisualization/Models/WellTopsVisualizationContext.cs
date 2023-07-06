@@ -1,0 +1,47 @@
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+
+namespace WellTopVisualization.Models;
+
+//Entity Framework Core ile birlikte kullanılan bir DbContext sınıfının özel bir türevidir. Bu sınıf, veritabanı bağlantısını yapılandırır,
+//veritabanı tablolarını temsil eden DbSet özelliklerini tanımlar ve modelin oluşturulması için Fluent API'yi kullanır.
+
+
+//Make connection to the database 
+//DbContext: for access our models,entities, tables, data
+public partial class WellTopsVisualizationContext : DbContext
+{
+    public WellTopsVisualizationContext()
+    {
+    }
+
+    //we are passing the options and we are sending those options to the base class
+    public WellTopsVisualizationContext(DbContextOptions<WellTopsVisualizationContext> options) : base(options)
+    {
+    }
+
+    public virtual DbSet<Guess> Guesses { get; set; }
+
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=MONSTER\\SQLEXPRESS;Database=WellTopsVisualization;Trusted_Connection=True;TrustServerCertificate=True;");
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Guess>(entity =>
+        {
+            entity.ToTable("Guess");
+
+            entity.Property(e => e.GuessId).HasColumnName("GuessID");
+            entity.Property(e => e.Difference).HasColumnName("difference");
+            entity.Property(e => e.TakenNumber).HasColumnName("takenNumber");
+            entity.Property(e => e.TotalWin).HasColumnName("totalWin");
+        });
+
+        OnModelCreatingPartial(modelBuilder);
+    }
+
+    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+}

@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+ 
+}
+@model List<Guess>
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <h1 class="display-4">Melisa Yüncü</h1>
+    <p>Date: @DateTime.Now</p>
+
+    <form action =" /Home/Index" method="post">
+        <input type="number" name="getNum" />
+        <input type="submit"></input>
+    </form>
+
+    <br />
+    <h5>@ViewData["randomNumber"]</h5>
+    <h6>@ViewData["input"]</h6>
+
+    <table class="table">
+        <thead>
+            <tr>
+                
+                <th scope="col">GuessId</th>
+                <th scope="col">Taken Number</th>
+                <th scope="col">Difference</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.GuessId</td>
+                    <td>@item.TakenNumber</td>
+                    <td>@item.Difference</td>
+                    
+                </tr>
+            }
+           
+        </tbody>
+    </table>
+
+    @if (@ViewData["maxTotal"] == null)
+    {
+        <h5>Total Win = 0</h5>
+    }
+    else
+    {
+        <h5>Total Win = @ViewData["maxTotal"]</h5>
+    }
+   
+
+</div>
