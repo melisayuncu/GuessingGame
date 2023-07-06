@@ -52,11 +52,11 @@ namespace WellTopVisualization.Controllers
 
 
 
-          /*  if ( _context.Guesses.Count() > 0 ) {
+            if ( _context.Guesses.Count() > 0 ) {
 
                 //Guesses tablosunda veri varsa, ViewData üzerinden "maxTotal" anahtarına en yüksek TotalWin değerini ekler.
                 ViewData["maxTotal"] = _context.Guesses.Max(p => p.TotalWin);
-            }*/
+            }
 
 
             return View(guesses);
